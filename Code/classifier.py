@@ -1,4 +1,4 @@
-from sklearn.model_selection import KFold
+from sklearn.cross_validation import KFold
 import os
 from os import listdir
 from os.path import isfile, join
@@ -17,7 +17,7 @@ def get_data():
 	for file in files:
 		if "jpg" not in file and "png" not in file:
 			continue
-		pos.append(get_hog(file))
+		pos.append(get_hog(directory+"/"+file))
 
 	directory=os.getcwd()+"/training/negative/"
 	files = [f for f in listdir(directory) if isfile(join(directory, f))]
@@ -25,7 +25,7 @@ def get_data():
 	for file in files:
 		if "jpg" not in file and "png" not in file:
 			continue
-		neg.append(get_hog(file))
+		neg.append(get_hog(directory+"/"+file))
 	shuffle(neg)
 	neg=neg[:len(pos)]
 	return pos,neg
@@ -39,7 +39,7 @@ def kfold_split(positive,negative,k=5):
 	for i in negative:
 		y_neg.append(0)
 
-	
+
 pos,neg=get_data()
 print "Number of positive samples: ",len(pos)
 print "Number of negative samples: ",len(neg)
