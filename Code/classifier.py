@@ -31,7 +31,7 @@ def get_data():
 	return pos,neg
 
 def kfold_split(positive,negative,k=5):
-	cross_val_data=[]
+	cross_val_data={}
 	shuffle(positive)
 	shuffle(negative)
 	step_pos=int(0.2*len(positive))
