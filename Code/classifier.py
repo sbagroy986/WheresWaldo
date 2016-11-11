@@ -48,30 +48,30 @@ def kfold_split(positive,negative,k=5):
 
 		if i!=5:
 			for t in range((i-1)*step_pos,i*step_pos):
-				cross_val_data[i]['test_features'].append(positive[t])
+				cross_val_data[i]['test_features'].append(list(positive[t]))
 				cross_val_data[i]['test_labels'].append(1)
 				test.append(t)
 			for t in range((i-1)*step_pos,i*step_pos):
-				cross_val_data[i]['test_features'].append(negative[t])
+				cross_val_data[i]['test_features'].append(list(negative[t]))
 				cross_val_data[i]['test_labels'].append(0)
 				test.append(t)
 		else:
 			for t in range((i-1)*step_pos,len(positive)):
-				cross_val_data[i]['test_features'].append(positive[t])
+				cross_val_data[i]['test_features'].append(list(positive[t]))
 				cross_val_data[i]['test_labels'].append(1)
 				test.append(t)
 			for t in range((i-1)*step_pos,len(positive)):
-				cross_val_data[i]['test_features'].append(negative[t])
+				cross_val_data[i]['test_features'].append(list(negative[t]))
 				cross_val_data[i]['test_labels'].append(0)
 				test.append(t)
 
 		for t in range(len(positive)):
 			if t not in test:
-				cross_val_data[i]['train_features'].append(positive[t])
+				cross_val_data[i]['train_features'].append(list(positive[t]))
 				cross_val_data[i]['train_labels'].append(1)
 		for t in range(len(negative)):
 			if t not in test:
-				cross_val_data[i]['train_features'].append(negative[t])
+				cross_val_data[i]['train_features'].append(list(negative[t]))
 				cross_val_data[i]['train_labels'].append(0)			
 		# print "Fold: ",i
 		# print "Train: ",len(cross_val_data[i]['train_features'])
@@ -81,6 +81,7 @@ def kfold_split(positive,negative,k=5):
 def classifier(cross_val_data):
 	for i in range(1,6):
 		model=LinearSVC()
+		print cross_val_data[i]['test_labels']
 		model.fit(cross_val_data[i]['train_features'],cross_val_data[i]['train_labels'])
 		preds=model.predict(cross_val_data[i]['test_features'])
 		y=cross_val_data[i]['test_labels']
