@@ -1,4 +1,3 @@
-from sklearn.cross_validation import KFold
 from random import shuffle
 import os
 from os import listdir
@@ -32,16 +31,52 @@ def get_data():
 	return pos,neg
 
 def kfold_split(positive,negative,k=5):
-	y_pos=[]
-	y_neg=[]
-	y=[]
-	for i in positive:
-		y_pos.append(1)
-	for i in negative:
-		y_neg.append(0)
+	cross_val_data=[]
+	shuffle(positive)
+	shuffle(negative)
+	step_pos=int(0.2*len(positive))
+	step_neg=int(0.2*len(negative))
+	for i in range(1,6):
+		cross_val_data[i]={}
+		cross_val_data[i]['train_features']=[]
+		cross_val_data[i]['train_labels']=[]
+		cross_val_data[i]['test_features']=[]
+		cross_val_data[i]['test_labels']=[]
+		test=[]
+
+		if i!=5:
+			for t in range((i-1)*step_pos,i*step_pos):
+				cross_val_data[i]['test_features'].append(positive[t])
+				cross_val_data[i]['test_labels'].append(1)
+				test.append(t)
+			for t in range((i-1)*step_neg,i*step_neg):
+				cross_val_data[i]['test_features'].append(negative[t])
+				cross_val_data[i]['test_labels'].append(0)
+				test.append(t)
+		else:
+			for t in range((i-1)*step_pos,len(positive)):
+				cross_val_data[i]['test_features'].append(positive[t])
+				cross_val_data[i]['test_labels'].append(1)
+				test.append(t)
+			for t in range((i-1)*step_neg,len(negative)):
+				cross_val_data[i]['test_features'].append(negative[t])
+				cross_val_data[i]['test_labels'].append(0)
+				test.append(t)
+
+		for t in range(len(positive)):
+			if t not in test:
+				cross_val_data[i]['train_features'].append(positive[t])
+				cross_val_data[i]['train_labels'].append(1)
+		for t in range(len(negative)):
+			if t not in test:
+				cross_val_data[i]['train_features'].append(negative[t])
+				cross_val_data[i]['train_labels'].append(0)			
+		print "Fold: ",i
+		print "Train: ",len(cross_val_data[i]['train_features'])
+		print "Test: ",len(cross_val_data[i]['test_features'])		
 
 
 pos,neg=get_data()
 print "Number of positive samples: ",len(pos)
 print "Number of negative samples: ",len(neg)
-
+kfold_split(pos,neg)
