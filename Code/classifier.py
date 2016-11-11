@@ -28,7 +28,7 @@ def get_data():
 			continue
 		neg.append(get_hog(directory+"/"+file))
 	shuffle(neg)
-	neg=neg[:((0.8*len(pos)*4+0.2*len(pos)))]
+	neg=neg[:(int(0.8*len(pos)*4+0.2*len(pos)))]
 	return pos,neg
 
 def kfold_split(positive,negative,k=5):
