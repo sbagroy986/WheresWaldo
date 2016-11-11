@@ -1,4 +1,6 @@
 from random import shuffle
+from sklearn.svm import LinearSVC
+from sklearn.metrics import accuracy_score
 import os
 from os import listdir
 from os.path import isfile, join
@@ -71,12 +73,22 @@ def kfold_split(positive,negative,k=5):
 			if t not in test:
 				cross_val_data[i]['train_features'].append(negative[t])
 				cross_val_data[i]['train_labels'].append(0)			
-		print "Fold: ",i
-		print "Train: ",len(cross_val_data[i]['train_features'])
-		print "Test: ",len(cross_val_data[i]['test_features'])		
+		# print "Fold: ",i
+		# print "Train: ",len(cross_val_data[i]['train_features'])
+		# print "Test: ",len(cross_val_data[i]['test_features'])		
+	return cross_val_data
 
+def classifier(cross_val_data):
+	for i in range(1,6):
+		model=LinearSVC()
+		model.fit(cross_val_data[i]['train_features'],cross_val_data[i]['train_labels'])
+		preds=model.predict(cross_val_data[i]['test_features'])
+		y=cross_val_data[i]['test_labels']
+		print "Fold ",i
+		print accuracy_score(y,preds)
 
 pos,neg=get_data()
 print "Number of positive samples: ",len(pos)
 print "Number of negative samples: ",len(neg)
-kfold_split(pos,neg)
+cross_val_data=kfold_split(pos,neg)
+
