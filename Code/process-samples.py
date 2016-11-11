@@ -6,7 +6,11 @@ from ImageAugmenter import ImageAugmenter
 from scipy import misc
 import numpy as np
 
-image = misc.imread("./training/positive/10_15_4.jpg")
+# directory=os.getcwd()+"/training/"
+# files = [f for f in listdir(directory) if isfile(join(directory, f))]
+
+file="10_15_4.jpg"
+image = misc.imread("./training/positive/"+file)
 height = image.shape[0]
 width = image.shape[1]
 
@@ -23,7 +27,7 @@ augmenter = ImageAugmenter(width, height, # width and height of the image (must 
 # augmented_images = augmenter.augment_batch(np.array([image], dtype=np.uint8))
 # for image in augmented_images:
 # 	augmented_images.plot()
-fig=augmenter.plot_image(image, nb_repeat=5)
+fig=augmenter.plot_image(image,name=file, nb_repeat=5)
 # for f in fig:
 # 	f.show()
 # fig.savefig("Verew")

@@ -646,7 +646,7 @@ class ImageAugmenter(object):
                                   cval=self.cval, interpolation_order=self.interpolation_order,
                                   seed=seed)
 
-    def plot_image(self, image, nb_repeat=40, show_plot=True):
+    def plot_image(self,image,name, nb_repeat=40, show_plot=True):
         """Plot augmented variations of an image.
 
         This method takes an image and plots it by default in 40 differently
@@ -672,9 +672,9 @@ class ImageAugmenter(object):
         else:
             images = np.resize(image, (nb_repeat, image.shape[0], image.shape[1],
                                image.shape[2]))
-        return self.plot_images(images, True, show_plot=show_plot)
+        return self.plot_images(images, True,name, show_plot=show_plot)
 
-    def plot_images(self, images, augment, show_plot=True, figure=None):
+    def plot_images(self, images, augment,name,show_plot=True, figure=None):
         """Plot augmented variations of images.
 
         The images will all be shown in the same window.
@@ -752,7 +752,7 @@ class ImageAugmenter(object):
             print "h"
             if show_plot:
                 print "here2"
-                plt.savefig(str(i),pad_inches = 0)
+                plt.savefig("./training/positive_expanded/"+name.strip(".jpg").strip(".png") + "_" + str(i),pad_inches = 0)
                 # plt.show()
         # not showing the plot might be useful e.g. on clusters
 
