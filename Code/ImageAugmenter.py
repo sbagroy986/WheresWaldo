@@ -723,7 +723,7 @@ class ImageAugmenter(object):
         #     fig = plt.figure(figsize=(10, 10))
 
         for i, image in enumerate(images):
-            print "here"
+            # print "here"
             plt.clf()
             fig=plt.figure()
             fig.gca().set_axis_off()
@@ -749,9 +749,9 @@ class ImageAugmenter(object):
             # "cmap" should restrict the color map to grayscale, but strangely
             # also works well with color images
             imgplot = plt.imshow(image, cmap=cm.Greys_r, aspect="equal")
-            print "h"
+            # print "h"
             if show_plot:
-                print "here2"
+                # print "here2"
                 plt.savefig("./training/positive_expanded/"+name.strip(".jpg").strip(".png") + "_" + str(i),pad_inches = 0)
                 # plt.show()
         # not showing the plot might be useful e.g. on clusters
