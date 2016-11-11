@@ -49,7 +49,7 @@ def kfold_split(positive,negative,k=5):
 				cross_val_data[i]['test_features'].append(positive[t])
 				cross_val_data[i]['test_labels'].append(1)
 				test.append(t)
-			for t in range((i-1)*step_neg,i*step_neg):
+			for t in range((i-1)*step_pos,i*step_pos):
 				cross_val_data[i]['test_features'].append(negative[t])
 				cross_val_data[i]['test_labels'].append(0)
 				test.append(t)
@@ -58,7 +58,7 @@ def kfold_split(positive,negative,k=5):
 				cross_val_data[i]['test_features'].append(positive[t])
 				cross_val_data[i]['test_labels'].append(1)
 				test.append(t)
-			for t in range((i-1)*step_neg,len(negative)):
+			for t in range((i-1)*step_pos,len(positive)):
 				cross_val_data[i]['test_features'].append(negative[t])
 				cross_val_data[i]['test_labels'].append(0)
 				test.append(t)
