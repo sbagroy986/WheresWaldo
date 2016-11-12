@@ -79,10 +79,10 @@ def classifier(cross_val_data):
 	for i in range(1,6):
 		train=[]
 		for k in cross_val_data[i]['train_features']:
-			train.append(list(k))
+			train.append(list(k[0]))
 		model=LinearSVC()
 		# print len(cross_val_data[i]['train_labels']), len(cross_val_data[i]['train_features'])
-		model.fit(train[0],cross_val_data[i]['train_labels'])
+		model.fit(train,cross_val_data[i]['train_labels'])
 		preds=model.predict(cross_val_data[i]['test_features'])
 		y=cross_val_data[i]['test_labels']
 		print "Fold ",i
