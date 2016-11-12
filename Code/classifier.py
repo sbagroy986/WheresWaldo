@@ -9,7 +9,7 @@ import numpy as np
 
 def get_hog(image):
 	i = Image.open(image)
-	return i.histogram()
+	return list(i.histogram())
 
 
 def get_data():
