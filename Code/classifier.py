@@ -7,9 +7,12 @@ from os.path import isfile, join
 from PIL import Image
 import numpy as np
 
+max_hist=1024
 def get_hog(image):
+	global max_hist
 	i = Image.open(image)
-	print len(i.histogram())
+	if max_hist > len(i.histogram()):
+		return i.histogram() + [0*(max_hist-len(i.histogram))]
 	return list(i.histogram())
 
 
