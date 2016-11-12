@@ -11,11 +11,10 @@ max_hist=1024
 def get_hog(image):
 	global max_hist
 	i = Image.open(image)
-	return [1,2,3]
-	# if max_hist < len(i.histogram()):
-	# 	print len(i.histogram())
-	# 	return i.histogram() + [0*(max_hist-len(i.histogram()))]
-	# return list(i.histogram())
+	if max_hist < len(i.histogram()):
+		# print len(i.histogram())
+		return i.histogram() + np.zeros(256)
+	return list(i.histogram())
 
 
 def get_data():
