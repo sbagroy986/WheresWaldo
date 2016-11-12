@@ -9,6 +9,7 @@ import numpy as np
 
 def get_hog(image):
 	i = Image.open(image)
+	print len(i.histogram())
 	return list(i.histogram())
 
 
@@ -80,7 +81,7 @@ def classifier(cross_val_data):
 		train=[]
 		for k in cross_val_data[i]['train_features']:
 			train.append(list(k))
-		print train
+		# print train
 		model=LinearSVC()
 		# print len(cross_val_data[i]['train_labels']), len(cross_val_data[i]['train_features'])
 		model.fit(train,cross_val_data[i]['train_labels'])
