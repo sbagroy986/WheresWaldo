@@ -80,7 +80,7 @@ def classifier(cross_val_data):
 		train=[]
 		for k in cross_val_data[i]['train_features']:
 			print k
-			train.append(list(k[0]))
+			train.append(list(k))
 		model=LinearSVC()
 		# print len(cross_val_data[i]['train_labels']), len(cross_val_data[i]['train_features'])
 		model.fit(train,cross_val_data[i]['train_labels'])
