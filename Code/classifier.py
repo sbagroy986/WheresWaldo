@@ -12,6 +12,7 @@ def get_hog(image):
 	global max_hist
 	i = Image.open(image)
 	a=np.array(i.convert('L'))
+	print a.sum(0), len(a.sum(0))
 	return a.sum(0)
 
 def get_data():
