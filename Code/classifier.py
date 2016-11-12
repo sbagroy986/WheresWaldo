@@ -78,7 +78,7 @@ def kfold_split(positive,negative,k=5):
 def classifier(cross_val_data):
 	for i in range(1,6):
 		model=LinearSVC()
-		print len(cross_val_data[i]['test_labels']), len(cross_val_data[i]['test_features'])
+		print len(cross_val_data[i]['train_labels']), len(cross_val_data[i]['train_features'])
 		model.fit(cross_val_data[i]['train_features'],cross_val_data[i]['train_labels'])
 		preds=model.predict(cross_val_data[i]['test_features'])
 		y=cross_val_data[i]['test_labels']
