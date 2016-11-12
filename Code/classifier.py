@@ -73,8 +73,6 @@ def kfold_split(positive,negative,k=5):
 			if t not in test:
 				cross_val_data[i]['train_features'].append(list(negative[t]))
 				cross_val_data[i]['train_labels'].append(0)
-		print cross_val_data[i]['train_features']
-		exit(0)
 	return cross_val_data
 
 def classifier(cross_val_data):
