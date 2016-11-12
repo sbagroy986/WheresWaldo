@@ -11,11 +11,8 @@ max_hist=1024
 def get_hog(image):
 	global max_hist
 	i = Image.open(image)
-	if max_hist < len(i.histogram()):
-		# print len(i.histogram())
-		return i.histogram() + np.zeros(256)
-	return list(i.histogram())
-
+	a=np.array(i.convert('L'))
+	return a.sum(0)
 
 def get_data():
 	directory=os.getcwd()+"/training/positive_expanded/"
