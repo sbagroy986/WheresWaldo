@@ -11,7 +11,7 @@ max_hist=1024
 def get_hog(image):
 	global max_hist
 	i = Image.open(image)
-	if max_hist > len(i.histogram()):
+	if max_hist < len(i.histogram()):
 		print len(i.histogram())
 		return i.histogram() + [0*(max_hist-len(i.histogram()))]
 	return list(i.histogram())
