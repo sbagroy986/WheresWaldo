@@ -1,4 +1,5 @@
 from random import shuffle
+from manipulate_image import split_image,merge_image
 from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
@@ -79,18 +80,34 @@ def kfold_split(positive,negative,k=5):
 	return cross_val_data
 
 def classifier(cross_val_data):
+	acc=[]
 	for i in range(1,6):
-		# model=LinearSVC()
-		model=LogisticRegression()
+		model=LinearSVC()
+		# model=LogisticRegression()
 		model.fit(cross_val_data[i]['train_features'],cross_val_data[i]['train_labels'])
-		# print len(cross_val_data[i]['test_features'])
 		preds=model.predict(cross_val_data[i]['test_features'])
 		y=cross_val_data[i]['test_labels']
 		print "Fold ",i
 		print accuracy_score(y,preds)
+		acc.append(accuracy_score(y,preds))
+		preds=model.predict(cross_val_data[i]['train_features'])
+		y=cross_val_data[i]['train_labels']
+		print accuracy_score(y,preds)
+	print "Mean accuracy: ",np.mean(acc)
+	train=cross_val_data[1]['train_features']+cross_val_data[1]['test_features']
+	labels=cross_val_data[1]['train_labels']+cross_val_data[1]['test_labels']
+	model=LinearSVC()
+	# model=LogisticRegression()
+	model.fit(train,labels)
+	return model
+
+def test_on_image(image,model):
+	split_image(image,64,64)
+	merge_image(image,model,64,64)
 
 pos,neg=get_data()
 print "Number of positive samples: ",len(pos)
 print "Number of negative samples: ",len(neg)
 cross_val_data=kfold_split(pos,neg)
-classifier(cross_val_data)
+model=classifier(cross_val_data)
+test_on_image("20.jpg",model)

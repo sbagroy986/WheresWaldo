@@ -13,6 +13,9 @@ for file in files:
 	if "jpg" not in file and "png" not in file:
 		continue
 	image = misc.imread("./training/positive/"+file)
+	# image=Image.open("./training/positive/"+file)
+	# for i in range(0,21):
+	# 	image.save(os.getcwd()+"/training/positive_expanded/"+file.strip(".jpg").strip(".png")+str(i)+".jpg")
 	height = image.shape[0]
 	width = image.shape[1]
 
