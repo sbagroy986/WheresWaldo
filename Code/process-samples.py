@@ -6,13 +6,13 @@ from ImageAugmenter import ImageAugmenter
 from scipy import misc
 import numpy as np
 
-directory=os.getcwd()+"/training/positive/"
+directory=os.getcwd()+"/training/positive_generated/"
 files = [f for f in listdir(directory) if isfile(join(directory, f))]
 
 for file in files:
 	if "jpg" not in file and "png" not in file:
 		continue
-	image = misc.imread("./training/positive/"+file)
+	image = misc.imread("./training/positive_generated/"+file)
 	# image=Image.open("./training/positive/"+file)
 	# for i in range(0,21):
 	# 	image.save(os.getcwd()+"/training/positive_expanded/"+file.strip(".jpg").strip(".png")+str(i)+".jpg")
