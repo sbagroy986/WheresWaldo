@@ -1,6 +1,7 @@
 from random import shuffle
 from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LogisticRegression
 import os
 from os import listdir
 from os.path import isfile, join
@@ -11,9 +12,8 @@ max_hist=1024
 def get_hog(image):
 	global max_hist
 	i = Image.open(image)
-	a=np.array(i.convert('L'))
-	print a.sum(0), len(a.sum(0))
-	return a.sum(0)
+	# print len(i.histogram())
+	return i.histogram()[:768]
 
 def get_data():
 	directory=os.getcwd()+"/training/positive_expanded/"
@@ -80,13 +80,10 @@ def kfold_split(positive,negative,k=5):
 
 def classifier(cross_val_data):
 	for i in range(1,6):
-		train=[]
-		for k in cross_val_data[i]['train_features']:
-			train.append(list(k))
-		# print train
-		model=LinearSVC()
-		# print len(cross_val_data[i]['train_labels']), len(cross_val_data[i]['train_features'])
-		model.fit(train,cross_val_data[i]['train_labels'])
+		# model=LinearSVC()
+		model=LogisticRegression()
+		model.fit(cross_val_data[i]['train_features'],cross_val_data[i]['train_labels'])
+		# print len(cross_val_data[i]['test_features'])
 		preds=model.predict(cross_val_data[i]['test_features'])
 		y=cross_val_data[i]['test_labels']
 		print "Fold ",i
